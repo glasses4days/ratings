@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>SIGN UP NOW</h1>
+<p>Complete sign-up form for {{ email }}:</p></br>
+<form action="/add_new_user" method="POST">
+    <input type="hidden" name="email" value={{ email }}></input>
+    <input type="text" name="password" placeholder="Password"></input>
+    <input type="number" name="age" placeholder="Age"></input>
+    <input type="text" name="zipcode" placeholder="Zipcode"></input>
+    <input type="submit" value="Create account"></input>
+
+</form>
+
+{% endblock %}

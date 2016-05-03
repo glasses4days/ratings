@@ -38,12 +38,21 @@ def sign_up():
 
     email = request.form.get("email")
 
-    if User.query.filter('email' == email).one():
+    try: 
+        User.query.filter('email' == email).one()
         return redirect('/login')
-    else:
+    except:
         #add email to our database and render sign_up.html
-        return render_template('sign_up.html')
 
+        return render_template('sign_up.html', email=email)
+
+@app.route('/add_new_user', methods=["POST"])
+def add_new_user():
+    """Unpack user input and add to users table"""
+
+    email, password, age, zipcode = request.form.get("email", "password", "age", "zipcode")
+
+    print email, password, age, zipcode
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
