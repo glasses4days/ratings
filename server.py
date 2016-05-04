@@ -64,6 +64,20 @@ def add_new_user():
 
     return redirect('/users')
 
+@app.route('/check_password', methods=['POST'])
+def check_password():
+    """Check if user-entered password is correct"""
+
+    password = request.form.get('password')
+
+    try:
+        User.query.filter(User.password == password).one()
+        return 1
+    except:
+        return 0
+
+
+
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
     # that we invoke the DebugToolbarExtension

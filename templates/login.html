@@ -2,20 +2,27 @@
 {% block content %}
 <h1>Login</h1>
 <p>Welcome back {{ email }}!</p>
+
+<p id='match-pw'></p>
+
 <form action='/check_password' method='POST'>
     <input type="password" name="password" placeholder="Enter password" id="user_password"></input>
     <input type="submit" value="Login" id="login"></input>
 </form>
 
+<script>
 $('#login').on('click', function(evt) {
-    var password = $('#user_password').val()
-    $.post('/check_password', password, perform function(data) {
-    if data === False:
-        evt.preventDefault
-        let them know it's not correct
+    var password = {'password': $('#user_password').val(),
+                    'email': {{ email }} };
+    $.post('/check_password', password, function(data) {
+    if (data === 0) {
+        evt.preventDefault();
+        $('#match-pw').html('Incorrect password. Try again.');
+    };
+}
+}
+</script>
 
-}
-}
 {% endblock %}
 
 
