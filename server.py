@@ -40,7 +40,7 @@ def sign_up():
 
     try: 
         User.query.filter(User.email == email).one()
-        return redirect('/users')
+        return render_template("login.html", email=email)
     except:
         #add email to our database and render sign_up.html
 
