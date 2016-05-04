@@ -2,13 +2,29 @@
 {% block content %}
 <h1>SIGN UP NOW</h1>
 <p>Complete sign-up form for {{ email }}:</p></br>
+
+<p id='enter-pw'></p>
+
 <form action="/add_new_user" method="POST">
     <input type="hidden" name="email" value={{ email }}></input>
-    <input type="text" name="password" placeholder="Password"></input>
+    <input type="password" name="password" placeholder="Password" id='pw'></input>
     <input type="number" name="age" placeholder="Age"></input>
     <input type="text" name="zipcode" placeholder="Zipcode"></input>
-    <input type="submit" value="Create account"></input>
+    <input type="submit" id='create-account' value="Create account"></input>
+
 
 </form>
+
+<script>
+
+console.log($('#pw').val());
+
+$('#create-account').on('submit', function(evt) {
+    evt.preventDefault();
+    $('#enter-pw').html('Please enter a password');
+})
+
+</script>
+
 
 {% endblock %}

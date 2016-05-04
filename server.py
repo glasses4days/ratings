@@ -50,9 +50,14 @@ def sign_up():
 def add_new_user():
     """Unpack user input and add to users table"""
 
-    email, password, age, zipcode = request.form.get("email", "password", "age", "zipcode")
+    email = request.form.get("email")
+    password = request.form.get("password")
+    age = request.form.get("age")
+    zipcode = request.form.get("zipcode")
 
-    print email, password, age, zipcode
+    
+
+    return redirect('/users')
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
