@@ -16,12 +16,15 @@
 </form>
 
 <script>
-
-console.log($('#pw').val());
-
-$('#create-account').on('submit', function(evt) {
-    evt.preventDefault();
-    $('#enter-pw').html('Please enter a password');
+// This is not work, we've tried === null, '' and is None. :(
+$('#create-account').on('click', function(evt) {
+    if ($('#pw').val() === null) {
+        console.log("has no password");
+        evt.preventDefault();
+        $('#enter-pw').html('Please enter a password');
+    } else {
+        console.log("has password");
+    }
 })
 
 </script>
