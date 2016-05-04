@@ -39,8 +39,8 @@ def sign_up():
     email = request.form.get("email")
 
     try: 
-        User.query.filter('email' == email).one()
-        return redirect('/login')
+        User.query.filter(User.email == email).one()
+        return redirect('/users')
     except:
         #add email to our database and render sign_up.html
 
@@ -55,7 +55,12 @@ def add_new_user():
     age = request.form.get("age")
     zipcode = request.form.get("zipcode")
 
-    
+    user = User(email=email, password=password,
+                age=age, zipcode=zipcode)
+
+
+    db.session.add(user)
+    db.session.commit()
 
     return redirect('/users')
 
