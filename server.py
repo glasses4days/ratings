@@ -32,6 +32,15 @@ def user_list():
 
     return render_template("user_list.html", users=users)
 
+@app.route('/movies')
+def movies_list():
+    """Show list of movies"""
+
+    movies = Movie.query.order_by(Movie.title).all()
+
+
+    return render_template("movie_list.html", movies=movies)
+
 @app.route('/users/<user_id>')
 def display_user_details(user_id):
     """Display information about selected user."""
@@ -103,8 +112,10 @@ def login_session():
     session['user'] = email
     flash('Successfully logged in as ' + session['user'])
 
+    user_id = (User.query.filter(User.email == email).one()).user_id
 
-    return redirect('/')
+
+    return redirect('/users/'+str(user_id))
 
 @app.route('/logout')
 def logout():

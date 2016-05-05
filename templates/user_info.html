@@ -5,7 +5,7 @@
 <p>Zipcode: {{ zipcode }} </p>
  <ul>Ratings<br>
   {% for rating in ratings %}
-    <li>{{ rating.movie.title }} Score: {{rating.score}}</li>
+    <li>{{ rating.movie.title }}, Score: {{ rating.score }}</li>
   {% endfor %}
 </ul>
 
