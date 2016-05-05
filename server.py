@@ -69,13 +69,35 @@ def check_password():
     """Check if user-entered password is correct"""
 
     password = request.form.get('password')
+    email = request.form.get('email')
 
     try:
-        User.query.filter(User.password == password).one()
-        return 1
+        User.query.filter(User.password == password, User.email == email).one()
+        return "True"
     except:
-        return 0
+        return "False"
 
+@app.route('/login_session', methods=["POST"])
+def login_session():
+    """Log in user, flash successful login message and redirect to home."""
+
+    email = request.form.get('email')
+    password = request.form.get('password')
+    session['user'] = email
+    flash('Successfully logged in as ' + session['user'])
+
+
+    return redirect('/')
+
+@app.route('/logout')
+def logout():
+    """User is logged out of session"""
+
+    session.clear()
+
+    flash('Logged out punk')
+
+    return redirect('/')
 
 
 if __name__ == "__main__":

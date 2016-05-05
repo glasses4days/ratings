@@ -12,6 +12,9 @@
             <input type="text" name="email" placeholder='Email'></input>
             <input type="submit" class="btn btn-default navbar-btn" value="Sign In" id="signin"></input>
         </form>
+        <form action = '/logout'>
+            <input type="submit" class="btn btn-default navbar-btn" value="Logout" id="logout"></input>
+        </form>
     </div>
 
     <br>
@@ -19,14 +22,22 @@
   <hr>
 
   
+<ul>
+  {% for message in get_flashed_messages() %}
+    <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+
 
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
   <script src="https://code.jquery.com/jquery.js"></script>
 
   <script src="scripts.js"></script>
-  
+
 {% block content %} put your content here {% endblock %}
+
+
 
 </body>
 </html>

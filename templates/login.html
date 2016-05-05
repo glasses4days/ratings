@@ -5,22 +5,28 @@
 
 <p id='match-pw'></p>
 
-<form action='/check_password' method='POST'>
+<form action='/login_session' method='POST' id='check-password'>
     <input type="password" name="password" placeholder="Enter password" id="user_password"></input>
+    <input type='hidden' name='email' value={{ email }}></input>
     <input type="submit" value="Login" id="login"></input>
 </form>
 
 <script>
+console.log('starting js');
 $('#login').on('click', function(evt) {
+    evt.preventDefault();
+    console.log('hi');
     var password = {'password': $('#user_password').val(),
-                    'email': {{ email }} };
+                    'email': '{{ email }}' };
     $.post('/check_password', password, function(data) {
-    if (data === 0) {
-        evt.preventDefault();
-        $('#match-pw').html('Incorrect password. Try again.');
-    };
-}
-}
+        if (data === 'False') {
+            $('#match-pw').html('Idiot. Incorrect password. Try again.');
+        } else {
+            console.log("Correct!");
+            $('#check-password').submit();
+        }
+    })
+})
 </script>
 
 {% endblock %}
