@@ -32,6 +32,23 @@ def user_list():
 
     return render_template("user_list.html", users=users)
 
+@app.route('/users/<user_id>')
+def display_user_details(user_id):
+    """Display information about selected user."""
+
+    user = User.query.filter(User.user_id==user_id).one()
+    age = user.age
+    zipcode = user.zipcode
+    ratings = user.ratings
+    
+
+    return render_template('user_info.html', 
+                            user=user, 
+                            age=age,
+                            zipcode=zipcode,
+                            ratings=ratings,
+                            user_id=user_id)
+
 @app.route('/sign_up', methods=["POST"])
 def sign_up():
     """Check if user exists in users table."""
@@ -93,7 +110,7 @@ def login_session():
 def logout():
     """User is logged out of session"""
 
-    session.clear()
+    session['user'] = ''
 
     flash('Logged out punk')
 
