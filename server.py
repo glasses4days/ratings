@@ -41,6 +41,14 @@ def movies_list():
 
     return render_template("movie_list.html", movies=movies)
 
+@app.route('/movies/<movie_id>')
+def display_movie_details(movie_id):
+    """Display info about selected movie."""
+
+    movie = Movie.query.filter(Movie.movie_id==movie_id).one()
+
+    return render_template("movie_info.html", movie=movie)
+
 @app.route('/users/<user_id>')
 def display_user_details(user_id):
     """Display information about selected user."""
@@ -89,6 +97,31 @@ def add_new_user():
     db.session.commit()
 
     return redirect('/users')
+
+# This is not yet working, unsure why, see AJAX call in movie_info.html
+@app.route('/add_rating', methods=['POST'])
+def add_rating():
+    """Checks if user has previously rated, adds or updates accordingly"""
+
+    rating = request.form.get("rating")
+    movie_id = request.form.get("movie")
+    user = User.query.filter(User.email==session['user']).one()
+    user_id = user.user_id
+    new_rating = Rating(movie_id=movie_id, user_id=user_id, score=rating)
+
+    try:
+        existing_rating = Rating.query.filter(Rating.user_id==user_id, Rating.movie_id==movie_id).one()
+        db.session.delete(existing_rating)
+        db.session.add(new_rating)
+        db.session.commit()
+    except:
+        db.session.add(new_rating)
+        db.session.commit()
+
+    return "True"
+
+
+
 
 @app.route('/check_password', methods=['POST'])
 def check_password():

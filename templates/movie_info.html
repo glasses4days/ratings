@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1> {{ movie.title }} </h1>
+<p>Release Date: {{ movie.released_at }} </p>
+<p><a href="{{ movie.imdb_url }}">IMDb</a></p>
+<form action='/movies/{{ movie.movie_id }}' id="new_movie_rating">
+    Add a rating here: <input type='number' min='1' max='5' id='user_rating'></input>
+    <input type="submit" value="Rate Movie" id="rate_btn"></input>
+</form>
+<p id='rating_success'></p>
+ <ul>Ratings<br>
+  {% for rating in movie.ratings %}
+    <li>Score: {{ rating.score }}</li>
+  {% endfor %}
+</ul>
+<script>
+// Attempting to update rating in database. This is not working yet, not sure why. Ran out of time. 
+    $('#rate_btn').on('click', function(evt){
+        evt.preventDefault();
+        console.log('preventedDefault')
+        var rating = {'rating': $('#user_rating').val(), 'movie': {{ movie.movie_id }}};
+        if ({{ session['user'] }}) {
+            $.post('/add_rating', rating, function(data) {
+                if(data === "True") {
+                    $('#rating_success').html('Your rating was successfully added');
+                }
+            }
+        })
+
+
+
+</script>
+{% endblock %}
